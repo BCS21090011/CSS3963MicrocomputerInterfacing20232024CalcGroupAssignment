@@ -285,7 +285,7 @@ inputOneNumber proc
 inputOneNumber endp
 ```
 
-* `inputOneNumber proc`: Defines the start of the `inputOneNumber` procedure.
+* **`inputOneNumber proc`**: Defines the start of the `inputOneNumber` procedure.
   * `mov ah, 09h`: Load the function code for printing a string in DOS into `AH`.
   * `mov dx, offset inputMsg`: Load the offset address of `inputMsg` into `DX`.
   * `int 21h`: Print `inputMsg`. [More about `INT` and `AH`](#interrupts).
