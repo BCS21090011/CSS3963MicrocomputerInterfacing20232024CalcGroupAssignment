@@ -713,6 +713,18 @@ The code in Assembly language is typically organize into different segments to s
 * **`.code`**:
   * This segment contains the actual instructions that the processor will execute.
 
+### Arithmatics:
+* **`add {a}, {b}`**: Add `{b}` to `{a}` and store the result in `{a}`.
+* **`sub {a}, {b}`**: Subtract `{b}` from `{a}` and store the result in `{a}`.
+* **`mul {a}`**:
+  * For 8-bit operation, `{a}` will multiply with `AL` and store the result in `AX`.
+  * For 16-bit operation, `{a}` will multiply with `AX` and store the result in `DX` and `AX` where `DX` store the first word and `AX` store the last word of the result.
+  * For 32-bit operation, `{a}` will multiply with `EAX` and store the result in `EDX` and `EAX` where `EDX` store the first four bytes and `EAX` store the last four bytes of the result.
+* **`div {a}`**:
+  * For 8-bit operation, divide `AX` by `{a}`. The quotient is stored in `AL` and the remainder in `AH`.
+  * For 16-bit operation, divide `AX` by `{a}`. The quotient is stored in `AX` and the remainder in `DX`.
+  * For 32-bit operation, divide `EAX` by `{a}`. The quotient is stored in `EAX` and the remainder in `EDX`.
+
 ### [Commons](https://www.cs.virginia.edu/~evans/cs216/guides/x86.html):
 * **`mov {a}, {b}`**:
   * Copy the data item referred to by `{b}` into location referred by `{a}`.
