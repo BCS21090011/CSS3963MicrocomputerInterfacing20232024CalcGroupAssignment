@@ -1,7 +1,7 @@
 # Calculator
 [Original Source]()
 
-This is for group assignment for *CSS3963 Microcomputer Interfacing 2023-2024*. The codes is intended to run in DOSBox.
+This is for group assignment for *CSS3963 Microcomputer Interfacing 2023-2024*. The codes is intended to run in DOSBox. The assembly files (.asm files) need to be compiled to executable files (.exe files) before running it, the steps are stated in [here](/Group%20Project.docx, "Steps to convert .asm to .exe, written by Howard Yam").
 
 ## Group members:
 * To be filled if wanted.
@@ -74,6 +74,8 @@ num2 dw 1
   * `num1 dw 1` and `num2 dw 1`: Word-sized variables used to store the first and second numbers input by the user, respectively (`inputForNumbers` will use both `num1` and `num2`; `inputOneNumber` will only use `num1`). They are initialized to 1.
 
 ---
+
+#### main:
 
 ```ASM
 .code
@@ -242,20 +244,30 @@ main endp
   * **start:**: A label indicating the start of the loop.
     * Display calculator interface:
       * `call printNewLine`: Calls a procedure to print a new line on the screen.
-      * `mov ah, 09h`: Load the function code for printing a string in DOS into `AH`.
-      * `mov dx, offset msg1`: Load the offset address of `msg1` into `DX`.
-      * `int 21h`: DOS interrupt, will print `msg1`. [More about `INT` and `AH`](#interrupts).
-      * Four steps above are repeated for `msg2` to `msg11`, displaying the options.
-      * `mov ah,01h`: Load the function code for reading a character from the keyboard into `AH`.
-      * `int 21h`: DOS interrupt, will read a character from the keyboard into `AL`. [More about `INT` and `AH`](#interrupts).
+      * ```ASM
+        mov ah, 09h
+        mov dx, offset msg1
+        int 21h
+        ```
+        * Print `msg1`. Explained [here](#interrupts).
+      * Steps above are repeated for `msg2` to `msg11`, displaying the options.
+      * ```ASM
+        mov ah,01h
+        int 21h
+        ```
+        * Read one character from standard input. Explained [here](#interrupts).
       * `call printNewLine`: Prints a new line after the user input.
     * Check operation:
       * `cmp al,'+'`: Compare the character entered by the user (stored in `AL`) with `'+'`.
       * `JE addOp`: Jump to addOp label if the previous line is equal, i.e., `al` is `'+'`.
-      * Two steps above are repeated for each operations. Check if the user input is equal to the specific character and jump to the respective label if they are equal.
-      * `mov ah,09h`: Prepare the function to print a string if the input is invalid. This line (and the lines below this line) will only execute if there are no jump for previous lines, which will check if the user input is equal to the characters for the operations, so if the code execute until here, it means that the user input does not match any characters for the operations, thus it is an invalid input.
-      * `mov dx, offset invalidChoice`: Loads the address of the `invalidChoice` message to be printed.
-      * `int 21h`: Prints the `invalidChoice` message.
+      * Steps above are repeated for each operations. Check if the user input is equal to the specific character and jump to the respective label if they are equal.
+      * ```ASM
+        mov ah,09h
+        mov dx, offset invalidChoice 
+        int 21h
+        ```
+        * Print `invalidChoice`. Explained [here](#interrupts).
+        * These lines (and the line below these) will only execute if there are no jump for previous lines, which will check if the user input is equal to the characters for the operations, so if the code execute until here, it means that the user input does not match any characters for the operations, thus it is an invalid input.
       * `JMP start`: Jump back to the `start`, prompting the user again.
     * Perform operation:
       * **`addOp:`**: Label for addition operation.
@@ -266,11 +278,16 @@ main endp
         * The codes in `factorialOp` is longer because the result is printed here rather than in the calculation procedure like what other operations did.
         * The code in `squareOp` and `cubeOp` are slighly different (`mov num2, 02h` and `mov num2, 03h` respectively) because it use predefined `num2`, which is exponent, and call `findPower` procedure.
       * **`exitProgram:`**: Label for exiting the program.
-        * `mov ah,4ch`: Load the function code for terminating a program.
-        * `int 21h`: DOS interrupt to terminate the program. [More about `INT` and `AH`](#interrupts).
+        * ```ASM
+          mov ah,4ch
+          int 21h
+          ```
+          * Exit program. Explained [here](#interrupts).
 * `main endp`: Marks the end of the `main` procedure. The `endp` directive is paired with the `proc` directive to define the bounds of a procedure in Assembly language.
 
 ---
+
+#### inputOneNumber:
 
 ```ASM
 ;take one number
@@ -286,9 +303,12 @@ inputOneNumber endp
 ```
 
 * **`inputOneNumber proc`**: Defines the start of the `inputOneNumber` procedure.
-  * `mov ah, 09h`: Load the function code for printing a string in DOS into `AH`.
-  * `mov dx, offset inputMsg`: Load the offset address of `inputMsg` into `DX`.
-  * `int 21h`: Print `inputMsg`. [More about `INT` and `AH`](#interrupts).
+  * ```ASM
+    mov ah, 09h
+    mov dx, offset inputMsg
+    int 21h
+    ```
+    * Print `inputMsg`. Explained [here](#interrupts).
   * `call inputNumber`: Call `inputNumber` procedure which will store the user input into `val`.
   * `mov ax, val`: Moves the value stored in `val` into `AX`.
   * `mov num1, ax`: Moves the value stored in `AX` into `num1`. `AX` is needed to move `val` to `num1` because it does not allow memory-to-memory move operation.
@@ -296,6 +316,8 @@ inputOneNumber endp
 * `inputOneNumber endp`: Marks the end of the `inputOneNumber` procedure.
 
 ---
+
+#### inputForNumbers:
 
 ```ASM
 ;take two numbers
@@ -317,7 +339,352 @@ ret
 inputForNumbers endp
 ```
 
+* **`inputForNumbers proc`**: Defines the start of `inputForNumbers` procedure.
+  * ```ASM
+    mov ah,09h
+    mov dx, offset inputMsg1
+    int 21h
+    ```
+    * Print `inputMsg1`. Explained [here](#interrupts).
+  * `call inputNumber`: Call `inputNumber` procedure which will store the user input into `val`.
+  * `mov ax, val`: Moves the value stored in `val` into `AX`.
+  * `mov num1, ax`: Moves the value stored in `AX` into `num1`.
+  * Steps above are repeated for `inputMsg2` and `val` will be stored into `num2`.
+  * `ret`: Returns from the `inputOneNumber` procedure.
+* `inputForNumbers endp`: Marks the end of the `inputForNumbers` procedure.
 
+---
+
+#### findSum:
+
+```ASM
+;this proc will find sum
+findSum proc
+	mov ax, num1
+	add ax, num2
+	mov val, ax
+	mov ah,09h
+	mov dx, offset outputMsg 
+	int 21h
+	call displayNumber
+ret
+findSum endp
+```
+
+* **`findSum proc`**: Defines the start of `findSum` procedure.
+  * `mov ax, num1`: Move value of `num1` to `AX`. This is required because `ADD` instruction can not accept two memory operands.
+  * `add ax, num2`: Add value of `num2` to `AX` which is currently storing `num1`. The result will be stored in `AX`.
+  * `mov val, ax`: Move the result stored in `AX` to `val`.
+  * ```ASM
+    mov ah,09h
+    mov dx, offset outputMsg
+    int 21h
+    ```
+    * Print `outputMsg`. Explained [here](#interrupts).
+  * `call displayNumber`: Call `displayNumber` procedure which will print value of `val`.
+  * `ret`: Returns from the `findSum` procedure.
+* `findSum endp`: Marks the end of the `findSum` procedure.
+
+---
+
+#### findSub:
+
+```ASM
+;this proc will find sub
+findSub proc
+	mov ax, num1
+	sub ax, num2
+	mov val, ax
+	mov ah,09h
+	mov dx, offset outputMsg 
+	int 21h
+	call displayNumber
+ret
+findSub endp
+```
+
+* **`findSub proc`**: Defines the start of `findSub` procedure.
+  * `mov ax, num1`: Move the value in `num1` into `AX`.
+  * `sub ax, num2`: Subtract `num2` from `AX` which is `num1`. The result will be stored in `AX`.
+  * `mov val, ax`: Move the value in `AX` into `val`.
+  * ```ASM
+    mov ah,09h
+    mov dx, offset outputMsg 
+    int 21h
+    ```
+    * Print `outputMsg`. Explained [here](#interrupts).
+  * `call displayNumber`: Call `displayNumber` procedure which will print value of `val`.
+  * `ret`: Returns from the `findSub` procedure.
+* `findSub endp`: Marks the end of the `findSub` procedure.
+
+---
+
+#### findFactorial:
+
+```ASM
+; Procedure to calculate the factorial of a number
+; Assumes num1 contains the number for which to calculate the factorial
+; Result will be stored in val
+findFactorial proc
+    mov cx, num1     ; Load the number into CX, which will serve as our counter
+    mov ax, 1        ; Initialize AX with 1, as the factorial result will be stored here
+    cmp cx, 0        ; Compare CX with 0 to handle the special case of 0!
+    JE factorialDone ; If CX is 0, jump to factorialDone (0! = 1)
+
+factorialLoop:
+    mul cx           ; Multiply AX by CX (AX = AX * CX), AX initially 1
+    loop factorialLoop ; Decrease CX by 1 and repeat the loop if CX != 0
+
+factorialDone:
+    mov val, ax      ; Store the result in val
+	ret
+findFactorial endp
+```
+
+* **`findFactorial proc`**: Defines the start of `findFactorial` procedure.
+* `findFactorial endp`: Marks the end of the `findFactorial` procedure.
+
+---
+
+#### findMul:
+
+```ASM
+;this proc will find mul
+findMul proc
+	mov ax, num1
+	mov bx, num2
+	mov dx,0
+	mul bx
+	mov val, ax
+	mov ah,09h
+	mov dx, offset outputMsg 
+	int 21h
+	call displayNumber
+ret
+findMul endp
+```
+
+* **`findMul proc`**: Defines the start of `findMul` procedure.
+* `findMul endp`: Marks the end of the `findMul` procedure.
+
+---
+
+#### findMud:
+
+```ASM
+;this proc will find modulus
+findMud proc
+    mov ax, num1            ; Load first number into AX
+    xor dx, dx              ; Clear DX to hold the remainder after division
+    div num2                ; AX divided by num2, quotient in AX, remainder in DX
+    mov val, dx             ; Move the remainder (modulus result) into 'val'
+    mov ah,09h
+    mov dx, offset outputMsg; Prepare to display "Result = $"
+    int 21h
+    call displayNumber      ; Display the result stored in 'val'
+ret              ; Return to start for next operation
+findMud endp
+```
+
+* **`findMud proc`**: Defines the start of `findMud` procedure.
+* `findMud endp`: Marks the end of the `findMud` procedure.
+
+---
+
+#### findDiv:
+
+```ASM
+;this proc will find div
+findDiv proc
+	mov ax, num1
+	mov bx, num2
+	mov dx, 0
+	div bx
+	mov val, ax
+	mov ah,09h
+	mov dx, offset outputMsg 
+	int 21h
+	call displayNumber
+ret
+findDiv endp
+```
+
+* **`findDiv proc`**: Defines the start of `findDiv` procedure.
+* `findDiv endp`: Marks the end of the `findDiv` procedure.
+
+---
+
+#### findPower:
+
+```ASM
+findPower proc
+    mov ax, num1    ; AX will hold the result, start with base.
+    mov cx, num2    ; CX will be the counter, start with exponent.
+    test cx, cx ; Test if exponent is 0.
+    jz setToOne ; If exponent is 0, jump to set result to 1.
+    dec cx  ; Decrement CX as it starts from exponent - 1.
+    jz endPower ; If num2 was 1, it is done.
+powerLoop:
+    mul num1    ; Multiply AX by num1, result in DX:AX, will only take AX.
+    loop powerLoop  ; Loop until CX is 0.
+    jmp endPower    ; Jump to endPower, bypassing setToOne.
+
+setToOne:
+    mov ax, 1   ; Directly set ax to 1 for the case num1 ** 0.
+    ; Skip the loop and go directly to storing the result.
+
+endPower:
+    mov val, ax ; Store result n val for displaying.
+    mov ah,09h
+	mov dx, offset outputMsg 
+	int 21h
+	call displayNumber
+    ret
+findPower endp
+```
+
+* **`findPower proc`**: Defines the start of `findPower` procedure.
+* `findPower endp`: Marks the end of the `findPower` procedure.
+
+---
+
+#### inputNumber:
+
+```ASM
+;this proc will take input from user and store value in val variable
+inputNumber proc
+    
+    mov val,0
+    mov ax,0
+again: 
+    mov val,ax
+    mov ah,01h
+    int 21h
+    cmp al,0dh
+    JE endLoop
+    cmp al,' '
+    JE endLoop
+    cmp al,'0'
+    JB inv
+    cmp al,'9'
+    JA inv
+    JMP store
+inv:   
+	
+	call printNewLine
+	mov ah,09h
+	mov dx,offset invalidMsg
+	int 21h
+	mov val,0
+	mov ax, 0
+	JMP again
+    JMP endLoop
+store:
+    sub al,30h
+    mov ch,al
+    mov cl,10
+    mov ax,val
+    mul cl
+    mov cl,ch
+    mov ch,0
+    add ax,cx
+    mov val,ax
+    JMP again
+endLoop:
+
+    ret
+inputNumber endp
+```
+
+* **`inputNumber proc`**: Defines the start of `inputNumber` procedure.
+* `inputNumber endp`: Marks the end of the `inputNumber` procedure.
+
+---
+
+```ASM
+;this proc  will display the number in decimal
+displayNumber proc 
+	
+	push ax
+	push bx
+	push cx
+	push dx
+	
+	mov ax, val
+	cmp ax, 0
+	JNL lab
+	not ax
+	add ax, 1
+	mov val, ax
+	mov ah, 02h
+	mov dl, '-'
+	int 21h
+	
+lab:
+	mov counter,0						; counter = no of digitst in num, set no of digit = 0
+	mov bx,10							
+	mov ax,val							; save value in ax
+	cmp ax,0							; if num is zero, then print 0 and exit
+	JNE saveDigit						; if num is not zero then save digit
+	mov ah,02h		
+	mov dl,'0'	
+	int 21h
+	JMP stopPrint						; if val = 0 , then display zero only and exit						
+saveDigit:
+	cmp ax,0							; stop when val become zero or less mean when ax<0					
+	JBE stopSaveDigit 
+	mov dx,0							; set dx=0
+	div bx								; div ax by bx, divide number by base 
+	push dx								; remainder will save on dx, we will push it on stack	
+	inc counter							; inc counter, increase the no of digits	
+	JMP saveDigit						; save next digit
+stopSaveDigit:
+	
+	mov cl,1							;loop counter cl =1
+startPrint:
+	cmp cl,counter						;check if cl > no of digitst , then stop printing the digit
+	JA stopPrint						
+	mov ah,02h					
+	pop dx	
+	add dl,'0'							; digit to character
+	int 21h
+	inc cl								; inc the loop counter
+	JMP startPrint						; print next digit
+stopPrint:								;stop print
+	pop dx
+	pop cx
+	pop bx
+	pop ax
+	
+	ret
+displayNumber endp
+```
+
+* **`displayNumber proc`**: Defines the start of `displayNumber` procedure.
+* `displayNumber endp`: Marks the end of the `displayNumber` procedure.
+
+---
+
+```ASM
+; this proc will display new line
+printNewLine proc
+	mov ah,09h
+	mov dx, offset newLine
+	int 21h
+	ret
+printNewLine endp
+```
+
+* **`printNewLine proc`**: Defines the start of `printNewLine` procedure.
+* `printNewLine endp`: Marks the end of `printNewLine` procedure.
+
+---
+
+```ASM
+end main
+```
+
+* `end main`:
 
 ---
 
@@ -363,8 +730,21 @@ The code in Assembly language is typically organize into different segments to s
 * [**`cmp {a}, {b}`**](https://www.tutorialspoint.com/assembly_programming/assembly_conditions.htm):
   * Compare `{a}` to `{b}`.
   * Usually use with [jumps](#jumps).
+* **`test {a}, {b}`**:
+  * Performs a bitwise `AND` operation on `{a}` and `{b}` but does not store the result of the operation. Instead, it sets or clears the flags in the CPU's status register based on the outcome of the operation. The primary purpose of the `TEST` instruction is to set the conditional flags for subsequent conditional branch instructions (such as `JE`, `JNE`, `JZ`, `JNZ`, [etc](#jumps).) without altering the values of the operands.
+  * Flags affected:
+    * Zero Flag (ZF): Set if the result of the AND operation is 0; otherwise, it is cleared. This is often used to check if a specific bit or bits are clear in a register or memory location.
+    * Sign Flag (SF): Set to the most significant bit of the result. It indicates the sign of the result for signed integers.
+    * Parity Flag (PF): Set if the number of set bits in the result is even; otherwise, it is cleared.
+    * Overflow Flag (OF) and Carry Flag (CF): Cleared by the TEST instruction, as there is no carry or overflow in a bitwise AND operation.
+  * **`call {proc}`**:
+    * Calls `{proc}` procedure to be executed.
+    * When the called procedure completes, execution flow resumes at the instruction following the call instruction. 
+  * [**`ret`**](https://docs.oracle.com/cd/E19455-01/806-3773/instructionset-67/index.html):
+    * Transfer control to the return address located on the stack. This address is usually placed on the stack by a `CALL` instruction.
+    * Issue the `ret` instruction within the called procedure to resume execution flow at the instruction following the `call`.
 
-### [Jumps:](https://www.tutorialspoint.com/assembly_programming/assembly_conditions.htm)
+### [Jumps](https://www.tutorialspoint.com/assembly_programming/assembly_conditions.htm):
 Syntax: `JMP label` where `JMP` is the jump instruction and `label` is the label to jump to.
 
 * Unconditional Jump:
@@ -405,8 +785,37 @@ Syntax: `JMP label` where `JMP` is the jump instruction and `label` is the label
     | **`JS`** | Jump Sign (negative value) |
     | **`JNS`** | Jump No Sign (positive value) |
 
+### [Loops](https://docs.oracle.com/cd/E19455-01/806-3773/instructionset-72/index.html):
+* **`loop {label}`**:
+  * Decrement the count register (`CX`), jump to `{label}` if count not equal 0.
+
 ### Interrupts:
 * [**`INT 21h`**](https://wikidev.in/functions/assembly/8086_INT_21H): 8086 INT 21h DOS Interrupt Functions.
   * [**With `AH` = `01h`**](https://wikidev.in/wiki/assembly/8086_INT_21H/AH01h): Read character from standard input, with echo (with echo here means it will also print the character input to the standard output). The character readed will store in `AL`.
-  * [**With `AH` = `09h`**](https://wikidev.in/wiki/assembly/8086_INT_21H/AH09H): Write string to standard output, the string printed is `DS:DX` until terminated string (`$`).
-  * [**With `AH` = `4Ch`**](https://stanislavs.org/helppc/int_21-4c.html): Terminate process with return code.
+    * Example:
+      * ```ASM
+        mov ah, 01h
+        int 21h
+        ```
+        * `mov ah, 01h`: Load the function code for reading a character from the keyboard into `AH`.
+        * `int 21h`: DOS interrupt, will read a character from the keyboard into `AL`. 
+  * [**With `AH` = `09h`**](https://wikidev.in/wiki/assembly/8086_INT_21H/AH09H):
+    * Write string to standard output, the string printed is `DS:DX` until terminated string (`$`).
+    * Example:
+      * ```ASM
+        mov ah, 09h
+        mov dx, offset string
+        int 21h
+        ```
+        * `mov ah, 09h`: Load the function code for printing a string in DOS into `AH`.
+        * `mov dx, offset string`: Load the offset address of `string` into `DX`, assume that `string` is defined in `.data`.
+        * `int 21h`: DOS interrupt, will print `string`.
+  * [**With `AH` = `4Ch`**](https://stanislavs.org/helppc/int_21-4c.html):
+    * Terminate process with return code.
+    * Example:
+      * ```ASM
+        mov ah, 4ch
+        int 21h
+        ```
+        * `mov ah,4ch`: Load the function code for terminating a program.
+        * `int 21h`: DOS interrupt to terminate the program.
