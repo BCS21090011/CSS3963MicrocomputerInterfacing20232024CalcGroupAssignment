@@ -815,6 +815,17 @@ Syntax: `JMP label` where `JMP` is the jump instruction and `label` is the label
         ```
         * `mov ah, 01h`: Load the function code for reading a character from the keyboard into `AH`.
         * `int 21h`: DOS interrupt, will read a character from the keyboard into `AL`. 
+  * [**With `AH` = `02h`**](https://wikidev.in/wiki/assembly/8086_INT_21H/AH02H):
+    * Write character to standard output, the character printed is in `DL`.
+    * Example:
+      * ```ASM
+        mov ah, 02h		
+        mov dl, '0'	
+        int 21h
+        ```
+        * `mov ah, 02h`: Load the function code for printing a character in DOS into `AH`.
+        * `mov dl, '0'`: Load character `'0'` into `DL`.
+        * `int 21h`: DOS interrupt, will print `'0'`.
   * [**With `AH` = `09h`**](https://wikidev.in/wiki/assembly/8086_INT_21H/AH09H):
     * Write string to standard output, the string printed is `DS:DX` until terminated string (`$`).
     * Example:
