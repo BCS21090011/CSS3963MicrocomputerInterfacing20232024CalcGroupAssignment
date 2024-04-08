@@ -2,6 +2,6 @@ findSum;
 AX = num1;
 AX += num2;
 val = AX;
-Print outputMsg;
+/Print outputMsg/;
 displayNumber();
 End;
