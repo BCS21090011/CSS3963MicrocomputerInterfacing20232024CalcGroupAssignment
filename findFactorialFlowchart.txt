@@ -1,0 +1,20 @@
+findFactorial;
+CX = num1;
+AX = 1;
+if(CX == 0)
+{
+  loop factorialDone;
+}
+factorialLoop:
+AX \*= CX;
+block loop factorialLoop
+{
+  CX --;
+  if(CX != 0)
+  {
+    loop factorialLoop;
+  }
+}
+factorialDone:
+val = AX;
+End;

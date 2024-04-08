@@ -1,0 +1,30 @@
+findPower;
+AX = num1;
+CX = num2;
+if(CX == 0)
+{
+  loop setToOne;
+}
+CX --;
+if(CX == 0)
+{
+  loop endPower;
+}
+powerLoop:
+AX \* num1; // Result store in combination of DX and AX (DX first part AX last part).
+block loop powerLoop
+{
+  CX --;
+  if(CX != 0)
+  {
+    loop powerLoop;
+  }
+}
+loop endPower;
+setToOne:
+AX = 1;
+endPower:
+val = AX;
+/Print outputMsg/;
+displayNumber();
+End;

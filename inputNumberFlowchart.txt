@@ -1,0 +1,43 @@
+inputNumber;
+Val = 0;
+AX = 0;
+again:
+val = AX;
+/Input/;  // Stored in AL.
+if(AL == 0x0D)
+{
+  loop endLoop;
+}
+if(AL == ' ')
+{
+  loop endLoop;
+}
+if(AL < '0')
+{
+  loop inv;
+}
+if(AL > '9')
+{
+  loop inv;
+}
+loop store;
+inv:
+printNewLine();
+/Print invalidMsg/;
+val = 0;
+AX = 0;
+loop again;
+loop endLoop;
+store:
+AL -= 0x30;
+CH = AL;
+CL = 10;  // 10 here is decimal.
+AX = val;
+AX = AL \* CL;
+CL = CH;
+CH = 0;
+AX += CX;
+val = AX;
+loop again;
+endLoop:
+End;

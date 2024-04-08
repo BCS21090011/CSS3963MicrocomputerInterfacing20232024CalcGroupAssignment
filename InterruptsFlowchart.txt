@@ -1,0 +1,29 @@
+Print;
+// To print a string:
+AH = 0x09;
+DX = string;
+int 0x21;
+End;
+return;
+
+Print;
+// To print a character:
+Ah = 0x02;
+DL = character;
+int 0x21;
+End;
+return;
+
+Input;
+// To input a character:
+AH = 0x01;
+int 0x21;
+End;
+return;
+
+Exit;
+// Exit the program:
+AH = 0x4C;
+int 0x21;
+End;
+return;

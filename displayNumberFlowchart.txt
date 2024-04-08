@@ -1,0 +1,51 @@
+displayNumber;
+push AX;
+push BX;
+push CX;
+push DX;
+AX = val;
+if(AX >= 0)
+{
+  loop lab;
+}
+not AX;
+AX += 1;
+val = AX;
+/Print '-'/;
+lab:
+counter = 0;
+BX = 10;  // 10 here is decimal.
+AX = val;
+if(AX != 0)
+{
+  loop saveDigit;
+}
+/Print '0'/;
+loop stopPrint;
+saveDigit:
+if(AX <= 0)
+{
+  loop stopSaveDigit;
+}
+DX = 0;
+AX / BX;  // Quotient stored in AX and remainder in DX.
+push DX;
+counter ++;
+loop saveDigit;
+stopSaveDigit:
+CL = 1;
+startPrint:
+if(CL > counter)
+{
+  loop stopPrint;
+}
+pop DX;
+/Print DL + '0'/;
+CL ++;
+loop startPrint;
+stopPrint:
+pop DX;
+pop CX;
+pop BX;
+pop AX;
+End;

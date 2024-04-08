@@ -1,0 +1,9 @@
+findMul;
+AX = num1;
+BX = num2;
+DX = 0;
+AX \* BX; // Result store in combination of DX and AX (DX first part AX last part).
+val = AX;
+/Print outputMsg/;
+displayNumber();
+End;

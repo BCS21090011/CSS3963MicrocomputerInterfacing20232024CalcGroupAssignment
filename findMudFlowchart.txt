@@ -1,0 +1,8 @@
+findMud;
+AX = num1;
+xor dx, dx; // This will set DX to 0 in a more "efficient" way.
+AX / num2;  // Quotient stored in AX and remainder in DX.
+val = DX;
+/Print outputMsg/;
+displayNumber();
+End;

@@ -1,0 +1,6 @@
+inputOneNumber;
+/Print inputMsg/;
+inputNumber();  // Store in val.
+AX = val;
+num1 = AX;
+End;

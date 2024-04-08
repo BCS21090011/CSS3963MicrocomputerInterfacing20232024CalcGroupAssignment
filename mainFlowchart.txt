@@ -1,0 +1,101 @@
+main;
+start:
+printNewLine();
+/Print msg1/;
+/Print msg2/;
+/Print msg3/;
+/Print msg4/;
+/Print msg5/;
+/Print msg6/;
+/Print msg7/;
+/Print msg8/;
+/Print msg9/;
+/Print msg10/;
+/Print msg11/;
+/Input/;  // Stored in AL.
+PrintNewLine();
+if(al == '+')
+{
+  loop addOp;
+}
+if(al == '-')
+{
+  loop subOp;
+}
+if(al == '*')
+{
+  loop mulOp;
+}
+if(al == '/')
+{
+  loop divOp;
+}
+if(al == '%')
+{
+  loop mudOp;
+}
+if(al == '!')
+{
+  loop factorialOp;
+}
+if(al == '^')
+{
+  loop powerOp;
+}
+if(al == '2')
+{
+  loop squareOp;
+}
+if(al == '3')
+{
+  loop cubeOp;
+}
+if(al == 'e')
+{
+  loop exitProgram;
+}
+/Print invalidChoice/;
+loop start;
+addOp:
+inputForNumbers();
+findSum();
+loop start;
+subOp:
+inputForNumbers();
+findSub();
+loop start;
+mulOp:
+inputForNumbers();
+findMul();
+loop start;
+divOp:
+inputForNumbers();
+findDiv();
+loop start;
+mudOp:
+inputForNumbers();
+findMud();
+loop start;
+factorialOp:
+inputOneNumber();
+findFactorial();
+/Print outputMsg/;
+DisplayNumber();
+loop start;
+powerOp:
+inputForNumbers();
+findPower();
+loop start;
+squareOp:
+inputOneNumber();
+num2 = 0x02;
+findPower();
+loop start;
+cubeOp:
+inputOneNumber();
+num2 = 0x03;
+findPower();
+loop start;
+exitProgram:
+Exit;
+main End;

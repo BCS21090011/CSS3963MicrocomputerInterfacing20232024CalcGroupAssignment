@@ -1,0 +1,9 @@
+findDiv;
+AX = num1;
+BX = num2;
+DX = 0;
+AX / BX;  // Quotient stored in AX and remainder in DX.
+val = AX;
+/Print outputMsg/;
+displayNumber();
+End;

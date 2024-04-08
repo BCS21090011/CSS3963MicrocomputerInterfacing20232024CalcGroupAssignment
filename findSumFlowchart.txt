@@ -1,0 +1,7 @@
+findSum;
+AX = num1;
+AX += num2;
+val = AX;
+Print outputMsg;
+displayNumber();
+End;

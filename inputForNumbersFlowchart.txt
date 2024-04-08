@@ -1,0 +1,10 @@
+inputForNumbers;
+/Print inputMsg1/;
+inputNumber();  // Store in val.
+AX = val;
+num1 = AX;
+/Print inputMsg2/;
+inputNumber();  // Store in val.
+AX = val;
+num2 = AX;
+End;
