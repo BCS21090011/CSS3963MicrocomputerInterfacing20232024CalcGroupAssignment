@@ -1,7 +1,7 @@
 # Calculator
 [Original Source]()
 
-This is for group assignment for *CSS3963 Microcomputer Interfacing 2023-2024*. The codes is intended to run in DOSBox. The assembly files (.asm files) need to be compiled to executable files (.exe files) before running it, the steps are stated in [here](/Group%20Project.docx, "Steps to convert .asm to .exe, written by Howard Yam").
+This is for group assignment for *CSS3963 Microcomputer Interfacing 2023-2024*. The codes is intended to run in DOSBox. The assembly files (.asm files) need to be compiled to executable files (.exe files) before running it, the steps are stated in [here](/Group%20Project.docx "Steps to convert .asm to .exe, written by Howard Yam").
 
 ## Group members:
 * To be filled if wanted.
@@ -63,7 +63,7 @@ num2 dw 1
   * `outputMsg db "Result = $"`: This string is used to prefix the output result displayed to the user.
   * `invalidChoice db "Invalid Choice$"`: Message displayed when the user inputs is invalid.
   * `msg1` until `msg10` are messages displayed to the user indicating which character to input for performing specific operations (addition, subtraction, multiplication, division, modulus, factorial, power, square, cube, and exit the program, respectively).
-    * `13,10,'&'` at the end of some messages inserts a new line (in [ASCII](https://www.asciitable.com/, "More about ASCII"), 13 is carriage return (`\r`), and 10 is line feed (`\n`)), then returns to the start of a new line, making the interface more readable.
+    * `13,10,'&'` at the end of some messages inserts a new line (in [ASCII](https://www.asciitable.com/ "More about ASCII"), 13 is carriage return (`\r`), and 10 is line feed (`\n`)), then returns to the start of a new line, making the interface more readable.
   * `msg11 db "Choice: $"`: Similar to `inputMsg`, `inputMsg1`, and `inputMsg2`, this prompt user to enter the character of the operation wanted to perform.
   * `invalidMsg db "Invalid Number, Please Enter again: $"`: Message displayed when the user inputs an invalid number.
   * `newLine db 13,10,'$'`: This defines a new line character sequence used to separate outputs for readability.
@@ -840,28 +840,28 @@ Syntax: `JMP label` where `JMP` is the jump instruction and `label` is the label
 These flowcharts are created and meant to be used using [code2flow](https://app.code2flow.com/).
 
 * [main](#main):
-  [![main flowchart](/main.svg)](/mainFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![main flowchart](/main.svg)](/mainFlowchart.txt "Click to see the code to generate this flowchart.")
 * [inputOneNumber](#inputonenumber):
-  [![inputOneNumber flowchart](/inputOneNumber.svg)](/inputOneNumberFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![inputOneNumber flowchart](/inputOneNumber.svg)](/inputOneNumberFlowchart.txt "Click to see the code to generate this flowchart.")
 * [inputForNumbers](#inputfornumbers):
-  [![inputForNumbers flowchart](/inputForNumbers.svg)](/inputForNumbersFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![inputForNumbers flowchart](/inputForNumbers.svg)](/inputForNumbersFlowchart.txt "Click to see the code to generate this flowchart.")
 * [findSum](#findsum):
-  [![findSum flowchart](/findSum.svg)](/findSumFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![findSum flowchart](/findSum.svg)](/findSumFlowchart.txt "Click to see the code to generate this flowchart.")
 * [findSub](#findsub):
-  [![findSub flowchart](/findSub.svg)](/findSubFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![findSub flowchart](/findSub.svg)](/findSubFlowchart.txt "Click to see the code to generate this flowchart.")
 * [findFactorial](#findfactorial):
-  [![findFactorial flowchart](/findFactorial.svg)](/findFactorialFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![findFactorial flowchart](/findFactorial.svg)](/findFactorialFlowchart.txt "Click to see the code to generate this flowchart.")
 * [findMul](#findmul):
-  [![findMul flowchart](/findMul.svg)](/findMulFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![findMul flowchart](/findMul.svg)](/findMulFlowchart.txt "Click to see the code to generate this flowchart.")
 * [findMud](#findmud):
-  [![findMud flowchart](/findMud.svg)](/findMudFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![findMud flowchart](/findMud.svg)](/findMudFlowchart.txt "Click to see the code to generate this flowchart.")
 * [findDiv](#finddiv):
-  [![findDiv flowchart](/findDiv.svg)](/findDiv.svg, "Click to see the code to generate this flowchart.")
+  [![findDiv flowchart](/findDiv.svg)](/findDiv.svg "Click to see the code to generate this flowchart.")
 * [findPower](#findpower):
-  [![findPower flowchart](/findPower.svg)](/findPowerFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![findPower flowchart](/findPower.svg)](/findPowerFlowchart.txt "Click to see the code to generate this flowchart.")
 * [inputNumber](#inputnumber):
-  [![inputNumber flowchart](/inputNumber.svg)](/inputNumberFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![inputNumber flowchart](/inputNumber.svg)](/inputNumberFlowchart.txt "Click to see the code to generate this flowchart.")
 * [displayNumber](#displaynumber):
-  [![displayNumber flowchart](/displayNumber.svg)](/displayNumberFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![displayNumber flowchart](/displayNumber.svg)](/displayNumberFlowchart.txt "Click to see the code to generate this flowchart.")
 * [printNewLine](#printnewline):
-  [![printNewLine flowchart](/printNewLine.svg)](/printNewLineFlowchart.txt, "Click to see the code to generate this flowchart.")
+  [![printNewLine flowchart](/printNewLine.svg)](/printNewLineFlowchart.txt "Click to see the code to generate this flowchart.")
