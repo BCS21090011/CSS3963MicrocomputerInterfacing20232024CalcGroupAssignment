@@ -601,6 +601,8 @@ inputNumber endp
 
 ---
 
+#### displayNumber:
+
 ```ASM
 ;this proc  will display the number in decimal
 displayNumber proc 
@@ -664,6 +666,8 @@ displayNumber endp
 * `displayNumber endp`: Marks the end of the `displayNumber` procedure.
 
 ---
+
+#### printNewLine:
 
 ```ASM
 ; this proc will display new line
@@ -831,3 +835,33 @@ Syntax: `JMP label` where `JMP` is the jump instruction and `label` is the label
         ```
         * `mov ah,4ch`: Load the function code for terminating a program.
         * `int 21h`: DOS interrupt to terminate the program.
+
+## Flowcharts:
+These flowcharts are created and meant to be used using [code2flow](https://app.code2flow.com/).
+
+* [main](#main):
+  [![main flowchart](/main.svg)](/mainFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [inputOneNumber](#inputonenumber):
+  [![inputOneNumber flowchart](/inputOneNumber.svg)](/inputOneNumberFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [inputForNumbers](#inputfornumbers):
+  [![inputForNumbers flowchart](/inputForNumbers.svg)](/inputForNumbersFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [findSum](#findsum):
+  [![findSum flowchart](/findSum.svg)](/findSumFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [findSub](#findsub):
+  [![findSub flowchart](/findSub.svg)](/findSubFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [findFactorial](#findfactorial):
+  [![findFactorial flowchart](/findFactorial.svg)](/findFactorialFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [findMul](#findmul):
+  [![findMul flowchart](/findMul.svg)](/findMulFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [findMud](#findmud):
+  [![findMud flowchart](/findMud.svg)](/findMudFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [findDiv](#finddiv):
+  [![findDiv flowchart](/findDiv.svg)](/findDiv.svg, "Click to see the code to generate this flowchart.")
+* [findPower](#findpower):
+  [![findPower flowchart](/findPower.svg)](/findPowerFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [inputNumber](#inputnumber):
+  [![inputNumber flowchart](/inputNumber.svg)](/inputNumberFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [displayNumber](#displaynumber):
+  [![displayNumber flowchart](/displayNumber.svg)](/displayNumberFlowchart.txt, "Click to see the code to generate this flowchart.")
+* [printNewLine](#printnewline):
+  [![printNewLine flowchart](/printNewLine.svg)](/printNewLineFlowchart.txt, "Click to see the code to generate this flowchart.")
